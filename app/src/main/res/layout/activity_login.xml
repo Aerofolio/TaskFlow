@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/textViewEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_email"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEmailInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextEmailInput" />
+
+    <EditText
+        android:id="@+id/editTextEmailInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:ems="15"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewLogo"
+        app:layout_constraintStart_toStartOf="@+id/imageViewLogo"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo" />
+
+    <TextView
+        android:id="@+id/textViewPasswordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_password"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPasswordInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextPasswordInput" />
+
+    <EditText
+        android:id="@+id/editTextPasswordInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="15"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/editTextEmailInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextEmailInput"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailInput" />
+
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/task_flow_blue"
+        android:ems="19"
+        android:text="@string/btn_login"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPasswordInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextPasswordInput"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordInput" />
+
+    <TextView
+        android:id="@+id/textViewRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_register"
+        app:layout_constraintEnd_toStartOf="@+id/textViewRegisterLink"
+        app:layout_constraintStart_toStartOf="@+id/buttonLogin"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+
+    <TextView
+        android:id="@+id/textViewRegisterLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_register_link"
+        android:textColor="@color/task_flow_blue"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewRegister"
+        app:layout_constraintStart_toEndOf="@+id/textViewRegister"
+        app:layout_constraintEnd_toEndOf="@+id/buttonLogin"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
