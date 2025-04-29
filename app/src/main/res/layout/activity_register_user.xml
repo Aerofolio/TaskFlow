@@ -7,4 +7,116 @@
     android:layout_height="match_parent"
     tools:context=".RegisterUserActivity">
 
+    <TextView
+        android:id="@+id/textViewFullNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_full_name"
+        app:layout_constraintBottom_toTopOf="@+id/editTextFullNameInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextFullNameInput" />
+
+    <EditText
+        android:id="@+id/editTextFullNameInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="15"
+        android:hint="@string/hint_full_name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_email"
+        app:layout_constraintBottom_toTopOf="@+id/editTextEmailInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextEmailInput" />
+
+    <EditText
+        android:id="@+id/editTextEmailInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="15"
+        android:hint="@string/hint_email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="@id/editTextFullNameInput"
+        app:layout_constraintStart_toStartOf="@id/editTextFullNameInput"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFullNameInput" />
+
+    <TextView
+        android:id="@+id/textViewCompanyCodeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_company_code"
+        app:layout_constraintBottom_toTopOf="@+id/editTextCompanyCodeInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextCompanyCodeInput" />
+
+    <EditText
+        android:id="@+id/editTextCompanyCodeInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="15"
+        android:hint="@string/hint_company_code"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="@id/editTextEmailInput"
+        app:layout_constraintStart_toStartOf="@id/editTextEmailInput"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailInput" />
+
+    <TextView
+        android:id="@+id/textViewPasswordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_password"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPasswordInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextPasswordInput" />
+
+    <EditText
+        android:id="@+id/editTextPasswordInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="15"
+        android:hint="@string/hint_password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/editTextCompanyCodeInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextCompanyCodeInput"
+        app:layout_constraintTop_toBottomOf="@+id/editTextCompanyCodeInput" />
+
+    <TextView
+        android:id="@+id/textViewRepeatPasswordLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_repeat_password"
+        app:layout_constraintBottom_toTopOf="@+id/editTextRepeatPasswordInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextRepeatPasswordInput" />
+
+    <EditText
+        android:id="@+id/editTextRepeatPasswordInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="15"
+        android:hint="@string/hint_repeat_password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPasswordInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextPasswordInput"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPasswordInput" />
+
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="19"
+        android:text="@string/btn_register"
+        android:backgroundTint="@color/task_flow_blue"
+        app:layout_constraintEnd_toEndOf="@+id/editTextRepeatPasswordInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextRepeatPasswordInput"
+        app:layout_constraintTop_toBottomOf="@+id/editTextRepeatPasswordInput" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
