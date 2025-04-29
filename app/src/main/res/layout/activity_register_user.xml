@@ -47,6 +47,37 @@
         app:layout_constraintStart_toStartOf="@id/editTextFullNameInput"
         app:layout_constraintTop_toBottomOf="@+id/editTextFullNameInput" />
 
+    <LinearLayout
+        android:id="@+id/warningCardLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailInput"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/task_flow_warning_background_blue"
+        android:layout_marginTop="40dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="19"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/task_flow_warning_text_blue"
+            android:text="Atenção!" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="19"
+            android:gravity="center"
+            android:textColor="@color/task_flow_warning_text_blue"
+            android:text="Caso você trabalhe para alguma empresa que já utiliza nosso aplicativo é necessário pedir para o seu administrador o código de acesso para que possa ser informado no campo abaixo. \nPara uma nova empresa, deixe esse campo em branco." />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/textViewCompanyCodeLabel"
         android:layout_width="wrap_content"
@@ -63,9 +94,9 @@
         android:ems="15"
         android:hint="@string/hint_company_code"
         android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="@id/editTextEmailInput"
-        app:layout_constraintStart_toStartOf="@id/editTextEmailInput"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmailInput" />
+        app:layout_constraintEnd_toEndOf="@id/warningCardLayout"
+        app:layout_constraintStart_toStartOf="@id/warningCardLayout"
+        app:layout_constraintTop_toBottomOf="@+id/warningCardLayout" />
 
     <TextView
         android:id="@+id/textViewPasswordLabel"
@@ -111,10 +142,10 @@
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/task_flow_blue"
         android:ems="19"
         android:text="@string/btn_register"
-        android:backgroundTint="@color/task_flow_blue"
         app:layout_constraintEnd_toEndOf="@+id/editTextRepeatPasswordInput"
         app:layout_constraintStart_toStartOf="@+id/editTextRepeatPasswordInput"
         app:layout_constraintTop_toBottomOf="@+id/editTextRepeatPasswordInput" />
