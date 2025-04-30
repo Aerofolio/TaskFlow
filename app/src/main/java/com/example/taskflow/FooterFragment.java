@@ -1,10 +1,12 @@
 package com.example.taskflow;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,17 +38,35 @@ public class FooterFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        imageButtonHome = view.findViewById(R.id.imageButtonHome);
-        imageButtonCalendar = view.findViewById(R.id.imageButtonCalendar);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_footer, container, false);
+        View view = inflater.inflate(R.layout.fragment_footer, container, false);
+        imageButtonHome = view.findViewById(R.id.imageButtonHome);
+        imageButtonCalendar = view.findViewById(R.id.imageButtonCalendar);
+        imageButtonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentActivity currentActivity = getActivity();
+                if (!currentActivity.getClass().getSimpleName().equals(HomeActivity.class.getSimpleName())){
+                    currentActivity.finish();
+                    Intent homeIntent = new Intent(currentActivity, HomeActivity.class);
+                    startActivity(homeIntent);
+                }
+            }
+        });
+        imageButtonCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentActivity currentActivity = getActivity();
+                if (!currentActivity.getClass().getSimpleName().equals(CalendarActivity.class.getSimpleName())){
+                    currentActivity.finish();
+                    Intent calendarIntent = new Intent(currentActivity, CalendarActivity.class);
+                    startActivity(calendarIntent);
+                }
+            }
+        });
+
+        return view;
     }
 }
