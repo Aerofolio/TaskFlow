@@ -18,6 +18,9 @@
 
     <string name="text_register">Ainda não possui uma conta?</string>
     <string name="text_register_link">Crie uma agora!</string>
+    <string name="text_register_user_warning">Caso você trabalhe para alguma empresa que já utiliza nosso aplicativo é necessário pedir para o seu administrador o código de acesso para que possa ser informado no campo abaixo. \nPara uma nova empresa, deixe esse campo em branco.</string>
+
+    <string name="title_attention">Atenção!</string>
 
     <string name="placeholder_go_back">Voltar</string>
 </resources>
