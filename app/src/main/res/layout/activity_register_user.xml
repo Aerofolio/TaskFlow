@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".RegisterUserActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerViewHeader"
+        android:name="com.example.taskflow.HeaderFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/textViewFullNameLabel"
         android:layout_width="wrap_content"
@@ -19,7 +28,7 @@
         android:id="@+id/editTextFullNameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="80dp"
         android:ems="15"
         android:hint="@string/hint_full_name"
         android:inputType="textPersonName"
