@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 public class FooterFragment extends Fragment {
     ImageButton imageButtonHome;
     ImageButton imageButtonCalendar;
+    ImageButton imageButtonRegisterTask;
 
     public FooterFragment() {
         // Required empty public constructor
@@ -44,6 +45,8 @@ public class FooterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_footer, container, false);
         imageButtonHome = view.findViewById(R.id.imageButtonHome);
         imageButtonCalendar = view.findViewById(R.id.imageButtonCalendar);
+        imageButtonRegisterTask = view.findViewById(R.id.imageButtonRegisterTask);
+
         imageButtonHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +67,14 @@ public class FooterFragment extends Fragment {
                     Intent calendarIntent = new Intent(currentActivity, CalendarActivity.class);
                     startActivity(calendarIntent);
                 }
+            }
+        });
+        imageButtonRegisterTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentActivity currentActivity = getActivity();
+                Intent registerTaskIntent = new Intent(currentActivity, RegisterTaskActivity.class);
+                startActivity(registerTaskIntent);
             }
         });
 
