@@ -23,4 +23,8 @@
     <string name="title_attention">Atenção!</string>
 
     <string name="placeholder_go_back">Voltar</string>
+
+    <string name="openDrawer">Abrir Menu</string>
+    <string name="closeDrawer">Fechar Menu</string>
+
 </resources>
