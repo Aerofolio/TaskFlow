@@ -3,9 +3,10 @@ package com.example.taskflow.model;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Serializable {
     private String title;
     private String description;
     private String deadline;

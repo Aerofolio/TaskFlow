@@ -5,4 +5,5 @@
     <color name="task_flow_blue">#2896D8</color>
     <color name="task_flow_warning_text_blue">#055160</color>
     <color name="task_flow_warning_background_blue">#9EEAF9</color>
+    <color name="gray">#CAC4D0</color>
 </resources>
