@@ -15,12 +15,76 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/textViewTaskTitleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nova tarefa!"
+        android:text="@string/label_task_title"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTaskTitleInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextTaskTitleInput" />
+
+    <EditText
+        android:id="@+id/editTextTaskTitleInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
+        android:ems="15"
+        android:hint="@string/hint_task_title"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTaskDescriptionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_task_description"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTaskDescriptionInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextTaskDescriptionInput" />
+
+    <EditText
+        android:id="@+id/editTextTaskDescriptionInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="15"
+        android:lines="3"
+        android:hint="@string/hint_task_description"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTaskTitleInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextTaskTitleInput"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTaskTitleInput" />
+
+    <TextView
+        android:id="@+id/textViewTaskPriorityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_task_priority"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerTaskPriority"
+        app:layout_constraintStart_toStartOf="@+id/spinnerTaskPriority" />
+
+    <Spinner
+        android:id="@+id/spinnerTaskPriority"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTaskDescriptionInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextTaskDescriptionInput"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTaskDescriptionInput"/>
+
+    <Button
+        android:id="@+id/buttonContinue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/task_flow_blue"
+        android:ems="19"
+        android:text="@string/btn_continue"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
