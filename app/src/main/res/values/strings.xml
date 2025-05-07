@@ -8,7 +8,8 @@
     <string name="hint_company_code">Código da Empresa</string>
     <string name="hint_task_title">Digite o Título</string>
     <string name="hint_task_description">Digite a Descrição</string>
-    <string name="hint_task_delivery">Data de entrega</string>
+    <string name="hint_task_delivery">DD/MM/YYYY</string>
+    <string name="hint_search_members">Pesquise por membros</string>
 
     <string name="label_email">E-mail</string>
     <string name="label_password">Senha</string>
@@ -23,6 +24,7 @@
     <string name="btn_login">ENTRAR</string>
     <string name="btn_register">CADASTRAR</string>
     <string name="btn_continue">CONTINUAR</string>
+    <string name="btn_save">SALVAR</string>
 
     <string name="text_register">Ainda não possui uma conta?</string>
     <string name="text_register_link">Crie uma agora!</string>
@@ -34,5 +36,5 @@
 
     <string name="openDrawer">Abrir Menu</string>
     <string name="closeDrawer">Fechar Menu</string>
-
+    <string name="title_added_members">Membros Adicionados</string>
 </resources>

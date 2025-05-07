@@ -74,6 +74,25 @@
         app:layout_constraintStart_toStartOf="@+id/editTextTaskDescriptionInput"
         app:layout_constraintTop_toBottomOf="@+id/editTextTaskDescriptionInput"/>
 
+    <TextView
+        android:id="@+id/textViewTaskDeliveryDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_task_delivery"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTaskdeliveryDateInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextTaskdeliveryDateInput" />
+
+    <EditText
+        android:id="@+id/editTextTaskDeliveryDateInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:ems="15"
+        android:hint="@string/hint_task_delivery"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerTaskPriority"
+        app:layout_constraintStart_toStartOf="@+id/spinnerTaskPriority"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTaskPriority" />
     <Button
         android:id="@+id/buttonContinue"
         android:layout_width="wrap_content"

@@ -1,7 +1,11 @@
 package com.example.taskflow;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
@@ -17,6 +21,8 @@ import java.util.List;
 
 public class RegisterTaskActivity extends AppCompatActivity {
     Spinner spinnerTaskPriority;
+    EditText editTextTaskDeliveryDateInput;
+    Button buttonContinue;
     private List<String> spinnerOptions;
 
     @Override
@@ -31,21 +37,25 @@ public class RegisterTaskActivity extends AppCompatActivity {
         });
 
         spinnerTaskPriority = findViewById(R.id.spinnerTaskPriority);
+        buttonContinue = findViewById(R.id.buttonContinue);
+        editTextTaskDeliveryDateInput = findViewById(R.id.editTextTaskDeliveryDateInput);
 
         spinnerOptions = new ArrayList<>();
         spinnerOptions.add("Alta");
         spinnerOptions.add("Média");
         spinnerOptions.add("Baixa");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                R.layout.item_spinner,
+                spinnerOptions);
+        spinnerTaskPriority.setAdapter(adapter);
 
-        try{
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                    this,
-                    R.layout.item_spinner,
-                    spinnerOptions);
-            spinnerTaskPriority.setAdapter(adapter);
-        } catch (Exception e) {
-            e.toString();
-        }
+        buttonContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent addTaskMembersIntent = new Intent(RegisterTaskActivity.this, AddTaskMembersActivity.class);
+                startActivity(addTaskMembersIntent);
+            }
+        });
     }
 }
