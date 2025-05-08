@@ -79,8 +79,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_task_delivery"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTaskdeliveryDateInput"
-        app:layout_constraintStart_toStartOf="@+id/editTextTaskdeliveryDateInput" />
+        app:layout_constraintBottom_toTopOf="@+id/editTextTaskDeliveryDateInput"
+        app:layout_constraintStart_toStartOf="@+id/editTextTaskDeliveryDateInput" />
 
     <EditText
         android:id="@+id/editTextTaskDeliveryDateInput"
