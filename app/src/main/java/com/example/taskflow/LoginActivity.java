@@ -12,10 +12,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.taskflow.database.AppDatabase;
+import com.example.taskflow.model.User;
+
+import java.io.Console;
+
 public class LoginActivity extends AppCompatActivity {
     TextView textViewRegisterLink;
     Button buttonLogin;
+    TextView editTextEmailInput;
+    TextView editTextPasswordInput;
 
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +38,10 @@ public class LoginActivity extends AppCompatActivity {
 
         textViewRegisterLink = findViewById(R.id.textViewRegisterLink);
         buttonLogin = findViewById(R.id.buttonLogin);
+        editTextEmailInput = findViewById(R.id.editTextEmailInput);
+        editTextPasswordInput = findViewById(R.id.editTextPasswordInput);
+
+        db = AppDatabase.getInstance(this);
 
         textViewRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,8 +54,16 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(homeIntent);
+                String userEmail = editTextEmailInput.getText().toString();
+                String userPassword = editTextPasswordInput.getText().toString();
+
+                new Thread(() -> {
+                    User userFromDatabase = db.userDao().getUserByEmail(userEmail);
+                    if (userFromDatabase != null && userFromDatabase.password.equals(userPassword)) {
+                        Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(homeIntent);
+                    }
+                }).start();
             }
         });
     }
