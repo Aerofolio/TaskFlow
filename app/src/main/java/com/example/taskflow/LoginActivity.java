@@ -5,15 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.taskflow.database.AppDatabase;
 import com.example.taskflow.model.User;
+import com.example.taskflow.utils.FormUtils;
 
 import java.io.Console;
 
@@ -54,17 +57,38 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userEmail = editTextEmailInput.getText().toString();
-                String userPassword = editTextPasswordInput.getText().toString();
+                boolean isFormValid = validateForm();
+                if (isFormValid){
+                    String userEmail = editTextEmailInput.getText().toString();
+                    String userPassword = editTextPasswordInput.getText().toString();
 
-                new Thread(() -> {
-                    User userFromDatabase = db.userDao().getUserByEmail(userEmail);
-                    if (userFromDatabase != null && userFromDatabase.password.equals(userPassword)) {
-                        Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
-                        startActivity(homeIntent);
-                    }
-                }).start();
+                    new Thread(() -> {
+                        User userFromDatabase = db.userDao().getUserByEmail(userEmail);
+                        if (userFromDatabase != null && userFromDatabase.password.equals(userPassword)) {
+                            Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(homeIntent);
+                        }
+                    }).start();
+                }
             }
         });
+    }
+
+    private boolean validateForm() {
+        boolean isValid = true;
+        String userEmail = editTextEmailInput.getText().toString();
+        String userPassword = editTextPasswordInput.getText().toString();
+
+        if (userEmail.isEmpty()){
+            isValid = false;
+            FormUtils.markInvalid(LoginActivity.this, editTextEmailInput, findViewById(R.id.textViewEmailLabel));
+        }
+
+        if (userPassword.isEmpty()){
+            isValid = false;
+            FormUtils.markInvalid(LoginActivity.this, editTextPasswordInput, findViewById(R.id.textViewPasswordLabel));
+        }
+
+        return isValid;
     }
 }

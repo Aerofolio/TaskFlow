@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.taskflow.dao.UserDao;
 import com.example.taskflow.model.User;
 
-@Database(entities = { User.class }, version = 1)
+@Database(entities = { User.class }, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
     public abstract UserDao userDao();
@@ -22,7 +22,9 @@ public abstract class AppDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             AppDatabase.class,
                             "task_flow_db"
-                    ).build();
+                    )
+                    .fallbackToDestructiveMigration(true)
+                    .build();
                 }
             }
         }

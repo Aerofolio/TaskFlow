@@ -31,6 +31,7 @@
     <string name="text_register_user_warning">Caso você trabalhe para alguma empresa que já utiliza nosso aplicativo é necessário pedir para o seu administrador o código de acesso para que possa ser informado no campo abaixo. \nPara uma nova empresa, deixe esse campo em branco.</string>
     <string name="text_required_field">Campo obrigatório!</string>
     <string name="text_passwords_equals">As senhas devem ser iguais!</string>
+    <string name="text_invalid_user">Email ou senha incorretos!</string>
 
     <string name="title_attention">Atenção!</string>
 
