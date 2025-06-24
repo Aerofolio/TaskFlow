@@ -9,4 +9,5 @@
     <color name="gray_light">#F5F5F5</color>
     <color name="task_flow_purple_light">#E7E5F9</color>
     <color name="task_flow_purple_dark">#7A29CC</color>
+    <color name="invalid_red">#F44336</color>
 </resources>

@@ -18,6 +18,9 @@ public class User {
     @NonNull
     public String email;
 
+    @NonNull
+    public String companyCode;
+
     public User() {
     }
 
