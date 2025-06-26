@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.taskflow.model.Task;
+import com.example.taskflow.model.complexTypes.TaskPriorityEnum;
 import com.example.taskflow.utils.FormUtils;
 
 import java.util.ArrayList;
@@ -46,9 +47,9 @@ public class RegisterTaskActivity extends AppCompatActivity {
         editTextTaskDeliveryDateInput = findViewById(R.id.editTextTaskDeliveryDateInput);
 
         spinnerOptions = new ArrayList<>();
-        spinnerOptions.add("Alta");
-        spinnerOptions.add("Média");
-        spinnerOptions.add("Baixa");
+        for (TaskPriorityEnum priority : TaskPriorityEnum.values()) {
+            spinnerOptions.add(priority.getDescription());
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 R.layout.item_spinner,
@@ -63,7 +64,8 @@ public class RegisterTaskActivity extends AppCompatActivity {
                     Task createdTask = new Task(
                         editTextTaskTitleInput.getText().toString(),
                         editTextTaskDescriptionInput.getText().toString(),
-                        editTextTaskDeliveryDateInput.getText().toString());
+                        editTextTaskDeliveryDateInput.getText().toString(),
+                        TaskPriorityEnum.values()[(int)spinnerTaskPriority.getSelectedItemId()]);
 
                     Intent addTaskMembersIntent = new Intent(RegisterTaskActivity.this, AddTaskMembersActivity.class);
                     addTaskMembersIntent.putExtra("createdTask", createdTask);
@@ -89,6 +91,7 @@ public class RegisterTaskActivity extends AppCompatActivity {
             FormUtils.markInvalid(RegisterTaskActivity.this, editTextTaskDescriptionInput, findViewById(R.id.textViewTaskDescriptionLabel));
         }
 
+        //TODO: Validar formato da data
         if (taskDeliveryDate.isEmpty()){
             isValid = false;
             FormUtils.markInvalid(RegisterTaskActivity.this, editTextTaskDeliveryDateInput, findViewById(R.id.textViewTaskDeliveryDateLabel));

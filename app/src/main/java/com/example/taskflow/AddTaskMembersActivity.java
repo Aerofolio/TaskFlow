@@ -55,10 +55,13 @@ public class AddTaskMembersActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Task createdTask = getIntent().getSerializableExtra("createdTask", Task.class);
-                //TODO: Adicionar usuários selecionados, obrogar selecionar pelo menos 1
+                //TODO: Adicionar usuários selecionados, obrigar selecionar pelo menos 1
 
-                Intent homeIntent = new Intent(AddTaskMembersActivity.this, HomeActivity.class);
-                startActivity(homeIntent);
+                new Thread(() -> {
+                    db.taskDao().addTask(createdTask);
+                    Intent homeIntent = new Intent(AddTaskMembersActivity.this, HomeActivity.class);
+                    startActivity(homeIntent);
+                }).start();
             }
         });
 
