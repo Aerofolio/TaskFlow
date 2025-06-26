@@ -89,6 +89,7 @@
         android:layout_marginTop="40dp"
         android:ems="15"
         android:hint="@string/hint_task_delivery"
+        android:focusable="false"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="@+id/spinnerTaskPriority"
         app:layout_constraintStart_toStartOf="@+id/spinnerTaskPriority"

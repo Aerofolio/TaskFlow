@@ -8,7 +8,7 @@
     <string name="hint_company_code">Código da Empresa</string>
     <string name="hint_task_title">Digite o Título</string>
     <string name="hint_task_description">Digite a Descrição</string>
-    <string name="hint_task_delivery">DD/MM/YYYY</string>
+    <string name="hint_task_delivery">Data de Entrega</string>
     <string name="hint_search_members">Pesquise por membros</string>
 
     <string name="label_email">E-mail</string>

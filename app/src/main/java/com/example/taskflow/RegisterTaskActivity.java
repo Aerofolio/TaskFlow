@@ -1,5 +1,6 @@
 package com.example.taskflow;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.taskflow.model.complexTypes.TaskPriorityEnum;
 import com.example.taskflow.utils.FormUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class RegisterTaskActivity extends AppCompatActivity {
@@ -55,6 +57,27 @@ public class RegisterTaskActivity extends AppCompatActivity {
                 R.layout.item_spinner,
                 spinnerOptions);
         spinnerTaskPriority.setAdapter(adapter);
+
+        editTextTaskDeliveryDateInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        RegisterTaskActivity.this,
+                        (view, selectedYear, selectedMonth, selectedDay) -> {
+                            // Format the date as you like
+                            String date = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear);
+                            editTextTaskDeliveryDateInput.setText(date);
+                        },
+                        year, month, day
+                );
+                datePickerDialog.show();
+            }
+        });
 
         buttonContinue.setOnClickListener(new View.OnClickListener() {
             @Override

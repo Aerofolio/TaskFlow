@@ -25,8 +25,8 @@ public interface UserDao {
     User getUserByEmail(String email);
 
     @Transaction
-    @Query("SELECT * FROM User WHERE companyCode = :companyCode AND id != :loggedUserId")
-    List<User> getUsersByCompanyCode(String companyCode, int loggedUserId);
+    @Query("SELECT * FROM User WHERE companyCode = :companyCode")
+    List<User> getUsersByCompanyCode(String companyCode);
 
     @Insert
     long addUser(User user);

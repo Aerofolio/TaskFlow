@@ -29,7 +29,6 @@ import java.util.List;
 public class AddTaskMembersActivity extends AppCompatActivity {
     Button buttonSaveTask;
     RecyclerView recyclerViewAddTaskMembers;
-//    private List<User> userList;
     private AddUserAdapter addUserAdapter;
     private AppDatabase db;
 
@@ -73,11 +72,8 @@ public class AddTaskMembersActivity extends AppCompatActivity {
         new Thread(() -> {
             SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
             String loggedUserCompanyCode = prefs.getString(PrefsUtils.USER_COMPANY_CODE, "");
-            int loggedUserId = prefs.getInt(PrefsUtils.USER_ID, 0);
 
-            List<User> sameCompanyUsers = db.userDao().getUsersByCompanyCode(loggedUserCompanyCode, loggedUserId);
-
-
+            List<User> sameCompanyUsers = db.userDao().getUsersByCompanyCode(loggedUserCompanyCode);
             addUserAdapter = new AddUserAdapter(sameCompanyUsers);
             recyclerViewAddTaskMembers.setAdapter(addUserAdapter);
         }).start();
