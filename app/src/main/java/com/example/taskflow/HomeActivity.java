@@ -1,7 +1,9 @@
 package com.example.taskflow;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskflow.adapters.TaskAdapter;
 import com.example.taskflow.model.Task;
+import com.example.taskflow.utils.PrefsUtils;
 import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     private List<Task> taskList;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
+    private TextView welcomeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,11 @@ public class HomeActivity extends AppCompatActivity {
 
         taskAdapter = new TaskAdapter(taskList);
         recyclerView.setAdapter(taskAdapter);
+
+        welcomeText = findViewById(R.id.textView3);
+        SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
+        String loggedUserName = prefs.getString(PrefsUtils.USER_NAME, "");
+        welcomeText.setText("Olá " + loggedUserName);
     }
 
     @Override

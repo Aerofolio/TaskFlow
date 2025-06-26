@@ -39,5 +39,5 @@
 
     <string name="openDrawer">Abrir Menu</string>
     <string name="closeDrawer">Fechar Menu</string>
-    <string name="title_added_members">Membros Adicionados</string>
+    <string name="title_added_members">Adicionar membros</string>
 </resources>

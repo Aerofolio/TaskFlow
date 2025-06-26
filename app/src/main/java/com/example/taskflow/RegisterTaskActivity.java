@@ -15,12 +15,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.taskflow.model.Task;
+import com.example.taskflow.utils.FormUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegisterTaskActivity extends AppCompatActivity {
     Spinner spinnerTaskPriority;
+    EditText editTextTaskTitleInput;
+    EditText editTextTaskDescriptionInput;
     EditText editTextTaskDeliveryDateInput;
     Button buttonContinue;
     private List<String> spinnerOptions;
@@ -38,6 +41,8 @@ public class RegisterTaskActivity extends AppCompatActivity {
 
         spinnerTaskPriority = findViewById(R.id.spinnerTaskPriority);
         buttonContinue = findViewById(R.id.buttonContinue);
+        editTextTaskTitleInput = findViewById(R.id.editTextTaskTitleInput);
+        editTextTaskDescriptionInput = findViewById(R.id.editTextTaskDescriptionInput);
         editTextTaskDeliveryDateInput = findViewById(R.id.editTextTaskDeliveryDateInput);
 
         spinnerOptions = new ArrayList<>();
@@ -53,9 +58,42 @@ public class RegisterTaskActivity extends AppCompatActivity {
         buttonContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addTaskMembersIntent = new Intent(RegisterTaskActivity.this, AddTaskMembersActivity.class);
-                startActivity(addTaskMembersIntent);
+                boolean isFormValid = validateForm();
+                if (isFormValid) {
+                    Task createdTask = new Task(
+                        editTextTaskTitleInput.getText().toString(),
+                        editTextTaskDescriptionInput.getText().toString(),
+                        editTextTaskDeliveryDateInput.getText().toString());
+
+                    Intent addTaskMembersIntent = new Intent(RegisterTaskActivity.this, AddTaskMembersActivity.class);
+                    addTaskMembersIntent.putExtra("createdTask", createdTask);
+                    startActivity(addTaskMembersIntent);
+                }
             }
         });
+    }
+
+    private boolean validateForm() {
+        boolean isValid = true;
+        String taskTitle = editTextTaskTitleInput.getText().toString();
+        String taskDescription = editTextTaskDescriptionInput.getText().toString();
+        String taskDeliveryDate = editTextTaskDeliveryDateInput.getText().toString();
+
+        if (taskTitle.isEmpty()){
+            isValid = false;
+            FormUtils.markInvalid(RegisterTaskActivity.this, editTextTaskTitleInput, findViewById(R.id.textViewTaskTitleLabel));
+        }
+
+        if (taskDescription.isEmpty()){
+            isValid = false;
+            FormUtils.markInvalid(RegisterTaskActivity.this, editTextTaskDescriptionInput, findViewById(R.id.textViewTaskDescriptionLabel));
+        }
+
+        if (taskDeliveryDate.isEmpty()){
+            isValid = false;
+            FormUtils.markInvalid(RegisterTaskActivity.this, editTextTaskDeliveryDateInput, findViewById(R.id.textViewTaskDeliveryDateLabel));
+        }
+
+        return isValid;
     }
 }

@@ -14,20 +14,20 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <EditText
-        android:id="@+id/editTextSearchMembers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:ems="17"
-        android:hint="@string/hint_search_members"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+<!--    <EditText-->
+<!--        android:id="@+id/editTextSearchMembers"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="80dp"-->
+<!--        android:ems="17"-->
+<!--        android:hint="@string/hint_search_members"-->
+<!--        android:inputType="text"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
 
     <TextView
-        android:id="@+id/textViewAddedMembers"
+        android:id="@+id/textViewAddMembers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -36,16 +36,16 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSearchMembers" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewAddedTaskMembers"
-        android:layout_width="0dp"
+        android:id="@+id/recyclerViewAddTaskMembers"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextSearchMembers"
-        app:layout_constraintStart_toStartOf="@+id/editTextSearchMembers"
-        app:layout_constraintTop_toBottomOf="@id/textViewAddedMembers" />
+        app:layout_constraintEnd_toEndOf="@+id/textViewAddMembers"
+        app:layout_constraintStart_toStartOf="@+id/textViewAddMembers"
+        app:layout_constraintTop_toBottomOf="@id/textViewAddMembers" />
 
     <Button
         android:id="@+id/buttonSaveTask"

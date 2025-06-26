@@ -1,6 +1,7 @@
 package com.example.taskflow;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.taskflow.database.AppDatabase;
 import com.example.taskflow.model.User;
 import com.example.taskflow.utils.FormUtils;
+import com.example.taskflow.utils.PrefsUtils;
 
 import java.io.Console;
 
@@ -65,6 +67,13 @@ public class LoginActivity extends AppCompatActivity {
                     new Thread(() -> {
                         User userFromDatabase = db.userDao().getUserByEmail(userEmail);
                         if (userFromDatabase != null && userFromDatabase.password.equals(userPassword)) {
+                            SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putInt(PrefsUtils.USER_ID, userFromDatabase.id);
+                            editor.putString(PrefsUtils.USER_NAME, userFromDatabase.name);
+                            editor.putString(PrefsUtils.USER_COMPANY_CODE, userFromDatabase.companyCode);
+                            editor.apply();
+
                             Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(homeIntent);
                         }
