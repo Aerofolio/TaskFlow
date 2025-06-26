@@ -10,25 +10,61 @@ public class User {
     public int id;
 
     @NonNull
-    public String name;
+    private String name;
 
     @NonNull
-    public String password;
+    private String password;
 
     @NonNull
-    public String email;
+    private String email;
 
     @NonNull
-    public String companyCode;
+    private String companyCode;
 
-    public User() {
+    public User(@NonNull String name, @NonNull String password, @NonNull String email, @NonNull String companyCode) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.companyCode = companyCode;
     }
 
-    public User(String name) {
+    @NonNull
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@NonNull String email) {
+        this.email = email;
+    }
+
+    @NonNull
+    public String getName() {
+        return name;
+    }
+
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
+    @NonNull
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(@NonNull String password) {
+        this.password = password;
+    }
+
+    @NonNull
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(@NonNull String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public int getId() {
+        return id;
     }
 }

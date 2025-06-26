@@ -56,10 +56,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                     String companyCode = editTextCompanyCodeInput.getText().toString();
 
                     new Thread(() -> {
-                            User newUser = new User(userFullName);
-                            newUser.password = userPassword;
-                            newUser.email = userEmail;
-                            newUser.companyCode = companyCode;
+                            User newUser = new User(userFullName, userPassword, userEmail, companyCode);
                             db.userDao().addUser(newUser);
                             finish();
                     }).start();

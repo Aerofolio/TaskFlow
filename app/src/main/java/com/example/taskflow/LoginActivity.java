@@ -66,12 +66,12 @@ public class LoginActivity extends AppCompatActivity {
 
                     new Thread(() -> {
                         User userFromDatabase = db.userDao().getUserByEmail(userEmail);
-                        if (userFromDatabase != null && userFromDatabase.password.equals(userPassword)) {
+                        if (userFromDatabase != null && userFromDatabase.getPassword().equals(userPassword)) {
                             SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putInt(PrefsUtils.USER_ID, userFromDatabase.id);
-                            editor.putString(PrefsUtils.USER_NAME, userFromDatabase.name);
-                            editor.putString(PrefsUtils.USER_COMPANY_CODE, userFromDatabase.companyCode);
+                            editor.putString(PrefsUtils.USER_NAME, userFromDatabase.getName());
+                            editor.putString(PrefsUtils.USER_COMPANY_CODE, userFromDatabase.getCompanyCode());
                             editor.apply();
 
                             Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);

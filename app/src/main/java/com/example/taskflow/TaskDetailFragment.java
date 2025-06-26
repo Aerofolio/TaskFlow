@@ -34,10 +34,10 @@ public class TaskDetailFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         userList = new ArrayList<>();
-        userList.add(new User("José"));
-        userList.add(new User("Maria"));
-        userList.add(new User("Lucas"));
-        userList.add(new User("Ana"));
+//        userList.add(new User("José"));
+//        userList.add(new User("Maria"));
+//        userList.add(new User("Lucas"));
+//        userList.add(new User("Ana"));
 
         userAdapter = new UserAdapter(userList);
         recyclerView.setAdapter(userAdapter);
