@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskflow.R;
 import com.example.taskflow.model.Comment;
+import com.example.taskflow.model.CommentWithUser;
 
 import java.util.List;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
-    private List<Comment> comments;
+    private List<CommentWithUser> comments;
 
-    public CommentAdapter(List<Comment> comments) {
+    public CommentAdapter(List<CommentWithUser> comments) {
         this.comments = comments;
     }
 
@@ -39,14 +40,22 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Comment comment = comments.get(position);
+        CommentWithUser comment = comments.get(position);
         holder.txtUser.setText(comment.getUser().getName());
-        holder.txtMessage.setText(comment.getMessage());
-        holder.txtTimestamp.setText(comment.getTimestamp());
+        holder.txtMessage.setText(comment.getComment().getMessage());
+        holder.txtTimestamp.setText(comment.getComment().getTimestamp());
     }
 
     @Override
     public int getItemCount() {
         return comments.size();
+    }
+
+    public List<CommentWithUser> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentWithUser> comments) {
+        this.comments = comments;
     }
 }
