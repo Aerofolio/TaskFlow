@@ -55,7 +55,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.cardView.setOnClickListener(v -> {
             Context context = v.getContext();
             Intent intent = new Intent(context, TaskDetailsActivity.class);
-            intent.putExtra("TASK", task);
+            intent.putExtra("TASK_ID", task.getId());
             context.startActivity(intent);
         });
 

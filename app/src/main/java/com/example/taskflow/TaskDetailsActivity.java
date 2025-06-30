@@ -30,10 +30,17 @@ public class TaskDetailsActivity  extends AppCompatActivity {
             return insets;
         });
 
+        int taskId = getIntent().getIntExtra("TASK_ID", -1);
+
+        if (taskId == -1) {
+            finish();
+            return;
+        }
+
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
 
-        adapter = new TabAdapter(this);
+        adapter = new TabAdapter(this, taskId);
         viewPager.setAdapter(adapter);
 
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {

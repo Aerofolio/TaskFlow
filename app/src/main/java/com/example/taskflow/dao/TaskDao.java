@@ -19,4 +19,8 @@ public interface TaskDao {
     @Transaction
     @Query("SELECT * FROM Task")
     List<Task> getTasks();
+
+    @Transaction
+    @Query("SELECT * FROM Task WHERE id = :taskId")
+    Task getTaskById(int taskId);
 }
