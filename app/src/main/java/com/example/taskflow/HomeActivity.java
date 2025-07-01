@@ -2,7 +2,10 @@ package com.example.taskflow;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -31,8 +34,9 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-//    private TaskAdapter taskAdapter;
-//    private List<Task> taskList;
+    private List<Task> allTasks = new ArrayList<>();
+    private TaskAdapter taskAdapter;
+    private EditText searchEditText;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private TextView welcomeText;
@@ -59,6 +63,20 @@ public class HomeActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         db = AppDatabase.getInstance(this);
 
+        searchEditText = findViewById(R.id.editTextText2);
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterTasks(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openDrawer, R.string.closeDrawer);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
@@ -67,19 +85,14 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         drawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.black));
 
-//        taskList = new ArrayList<Task>();
-//        taskList.add(new Task("Tarefa 1", "Descrição da tarefa 1", "2025-05-05", TaskPriorityEnum.HIGH));
-//        taskList.add(new Task("Tarefa 2", "Descrição da tarefa 2", "2025-06-06", TaskPriorityEnum.HIGH));
-//        taskList.add(new Task("Tarefa 3", "Descrição da tarefa 3", "2025-07-07", TaskPriorityEnum.HIGH));
-//
-//        taskAdapter = new TaskAdapter(taskList);
-//        recyclerView.setAdapter(taskAdapter);
-
         welcomeText = findViewById(R.id.textView3);
+
         SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
         String loggedUserName = prefs.getString(PrefsUtils.USER_NAME, "");
+
         welcomeText.setText("Olá " + loggedUserName);
 
         setTaskList();
@@ -101,9 +114,29 @@ public class HomeActivity extends AppCompatActivity {
 
             List<Task> taskList = db.taskDao().getTasks();
 
-            TaskAdapter taskAdapter = new TaskAdapter(taskList);
-            recyclerView.setAdapter(taskAdapter);
+            allTasks.clear();
+            allTasks.addAll(taskList);
+
+            runOnUiThread(() -> {
+                taskAdapter = new TaskAdapter(allTasks);
+                recyclerView.setAdapter(taskAdapter);
+            });
         }).start();
+    }
+
+
+    private void filterTasks(String query) {
+        List<Task> filteredList = new ArrayList<>();
+        for (Task task : allTasks) {
+            if (task.getTitle().toLowerCase().contains(query.toLowerCase()) || task.getDescription().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(task);
+            }
+        }
+
+        runOnUiThread(() -> {
+            taskAdapter.setTasks(filteredList);
+            taskAdapter.notifyDataSetChanged();
+        });
     }
 
 }
