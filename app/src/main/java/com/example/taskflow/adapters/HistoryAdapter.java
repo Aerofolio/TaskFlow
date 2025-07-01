@@ -9,47 +9,46 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskflow.R;
 import com.example.taskflow.model.HistoryItem;
+import com.example.taskflow.model.HistoryItemWithUser;
 
 import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
 
-    private List<HistoryItem> items;
+    private List<HistoryItemWithUser> historyList;
 
-    public HistoryAdapter(List<HistoryItem> items) {
-        this.items = items;
-    }
-
-    public static class HistoryViewHolder extends RecyclerView.ViewHolder {
-        TextView textUser;
-        TextView textAction;
-        TextView textTimestamp;
-
-        public HistoryViewHolder(View view) {
-            super(view);
-            textUser = view.findViewById(R.id.textUser);
-            textAction = view.findViewById(R.id.textAction);
-            textTimestamp = view.findViewById(R.id.textTimestamp);
-        }
+    public HistoryAdapter(List<HistoryItemWithUser> historyList) {
+        this.historyList = historyList;
     }
 
     @Override
     public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_history, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history, parent, false);
         return new HistoryViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
-        HistoryItem item = items.get(position);
-        holder.textUser.setText("Usuário: " + item.getUser());
-        holder.textAction.setText("Ação: " + item.getAction());
-        holder.textTimestamp.setText("Data: " + item.getTimestamp());
+        HistoryItemWithUser item = historyList.get(position);
+
+        holder.userTextView.setText(item.user.getName());
+        holder.actionTextView.setText(item.historyItem.getAction());
+        holder.timestampTextView.setText(item.historyItem.getTimestamp());
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return historyList.size();
+    }
+
+    public static class HistoryViewHolder extends RecyclerView.ViewHolder {
+        TextView userTextView, actionTextView, timestampTextView;
+
+        public HistoryViewHolder(View itemView) {
+            super(itemView);
+            userTextView = itemView.findViewById(R.id.textUser);
+            actionTextView = itemView.findViewById(R.id.textAction);
+            timestampTextView = itemView.findViewById(R.id.textTimestamp);
+        }
     }
 }

@@ -19,12 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskflow.adapters.AddUserAdapter;
 import com.example.taskflow.adapters.UserAdapter;
 import com.example.taskflow.database.AppDatabase;
+import com.example.taskflow.model.HistoryItem;
 import com.example.taskflow.model.Task;
 import com.example.taskflow.model.User;
 import com.example.taskflow.utils.PrefsUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AddTaskMembersActivity extends AppCompatActivity {
     Button buttonSaveTask;
@@ -57,7 +61,10 @@ public class AddTaskMembersActivity extends AppCompatActivity {
                 //TODO: Adicionar usuários selecionados, obrigar selecionar pelo menos 1
 
                 new Thread(() -> {
-                    db.taskDao().addTask(createdTask);
+                    long id = db.taskDao().addTask(createdTask);
+
+                    createHistory(id);
+
                     Intent homeIntent = new Intent(AddTaskMembersActivity.this, HomeActivity.class);
                     startActivity(homeIntent);
                 }).start();
@@ -68,6 +75,16 @@ public class AddTaskMembersActivity extends AppCompatActivity {
         setUserList();
     }
 
+    private void createHistory(long taskId) {
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
+        SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
+        int userId = prefs.getInt(PrefsUtils.USER_ID, -1);
+
+        HistoryItem item = new HistoryItem(taskId, userId, "Tarefa criada", timestamp);
+
+        new Thread(() -> db.historyItemDao().insert(item)).start();
+    }
     private void setUserList() {
         new Thread(() -> {
             SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
