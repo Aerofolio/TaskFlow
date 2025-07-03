@@ -57,6 +57,12 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
         if (isSameDay) {
             holder.cardViewDate.setCardBackgroundColor(holder.cardViewDate.getContext().getResources().getColor(R.color.task_flow_purple_light));
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onDayClickListener != null) {
+                onDayClickListener.onDayClick(date);
+            }
+        });
     }
 
     @Override
@@ -76,4 +82,15 @@ public class CalendarDayAdapter extends RecyclerView.Adapter<CalendarDayAdapter.
             cardViewDate = itemView.findViewById(R.id.cardViewDate);;
         }
     }
+
+    public interface OnDayClickListener {
+        void onDayClick(Date date);
+    }
+
+    private OnDayClickListener onDayClickListener;
+
+    public void setOnDayClickListener(OnDayClickListener listener) {
+        this.onDayClickListener = listener;
+    }
 }
+

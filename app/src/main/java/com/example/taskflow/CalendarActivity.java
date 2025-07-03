@@ -75,18 +75,37 @@ public class CalendarActivity extends AppCompatActivity {
                 outRect.right = space;
             }
         });
+
+        calendarDayAdapter.setOnDayClickListener(date -> {
+            selectedDate = date;
+            calendarDaysList = getCenteredDates(selectedDate);
+            calendarDayAdapter = new CalendarDayAdapter(calendarDaysList, selectedDate);
+            calendarDayAdapter.setOnDayClickListener(this::onDayClicked); // reatribua o listener
+            recyclerViewCalendarDays.setAdapter(calendarDayAdapter);
+        });
     }
 
     private void setCalendarDates() {
+        calendarDaysList = getCenteredDates(selectedDate);
+    }
+
+    private List<Date> getCenteredDates(Date centerDate) {
         List<Date> dates = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(selectedDate);
+        calendar.setTime(centerDate);
         calendar.add(Calendar.DAY_OF_MONTH, -2);
         for (int i = 0; i < 5; i++) {
             dates.add(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
+        return dates;
+    }
 
-        calendarDaysList = dates;
+    private void onDayClicked(Date date) {
+        selectedDate = date;
+        calendarDaysList = getCenteredDates(selectedDate);
+        calendarDayAdapter = new CalendarDayAdapter(calendarDaysList, selectedDate);
+        calendarDayAdapter.setOnDayClickListener(this::onDayClicked);
+        recyclerViewCalendarDays.setAdapter(calendarDayAdapter);
     }
 }
