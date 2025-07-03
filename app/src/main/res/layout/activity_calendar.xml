@@ -31,72 +31,81 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Seletor de datas -->
-    <LinearLayout
-        android:id="@+id/dateSelector"
-        android:layout_width="0dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCalendarDays"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_marginHorizontal="16dp"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/titleTasks"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/titleTasks"
+        app:layout_constraintStart_toStartOf="@+id/titleTasks"
+        app:layout_constraintTop_toBottomOf="@id/titleTasks" />
+<!--    &lt;!&ndash; Seletor de datas &ndash;&gt;-->
+<!--    <LinearLayout-->
+<!--        android:id="@+id/dateSelector"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginHorizontal="16dp"-->
+<!--        android:padding="8dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/titleTasks"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent">-->
 
-        <!-- Exemplo de um item de data (replicar conforme necessário) -->
-        <TextView
-            android:id="@+id/day_09"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
-            android:background="@color/gray_light"
-            android:gravity="center"
-            android:text="09\nSeg"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:padding="8dp"
-            android:textSize="14sp" />
+<!--        &lt;!&ndash; Exemplo de um item de data (replicar conforme necessário) &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/day_09"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:background="@color/gray_light"-->
+<!--            android:gravity="center"-->
+<!--            android:text="09\nSeg"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#000"-->
+<!--            android:padding="8dp"-->
+<!--            android:textSize="14sp" />-->
 
-        <TextView
-            android:id="@+id/day_10"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
-            android:background="@color/task_flow_purple_light"
-            android:gravity="center"
-            android:text="10\nTer"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:padding="8dp"
-            android:layout_marginStart="8dp"
-            android:textSize="14sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/day_10"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:background="@color/task_flow_purple_light"-->
+<!--            android:gravity="center"-->
+<!--            android:text="10\nTer"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#000"-->
+<!--            android:padding="8dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:textSize="14sp" />-->
 
-        <TextView
-            android:id="@+id/day_11"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
-            android:background="@color/task_flow_purple_dark"
-            android:gravity="center"
-            android:text="11\nQua"
-            android:textAlignment="center"
-            android:textColor="#fff"
-            android:padding="8dp"
-            android:layout_marginStart="8dp"
-            android:textSize="14sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/day_11"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:background="@color/task_flow_purple_dark"-->
+<!--            android:gravity="center"-->
+<!--            android:text="11\nQua"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#fff"-->
+<!--            android:padding="8dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:textSize="14sp" />-->
 
-        <TextView
-            android:id="@+id/day_12"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
-            android:background="@color/gray_light"
-            android:gravity="center"
-            android:text="12\nQui"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:padding="8dp"
-            android:layout_marginStart="8dp"
-            android:textSize="14sp" />
-    </LinearLayout>
+<!--        <TextView-->
+<!--            android:id="@+id/day_12"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:background="@color/gray_light"-->
+<!--            android:gravity="center"-->
+<!--            android:text="12\nQui"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="#000"-->
+<!--            android:padding="8dp"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:textSize="14sp" />-->
+<!--    </LinearLayout>-->
 
     <!-- Lista de Tasks -->
     <androidx.recyclerview.widget.RecyclerView
@@ -104,7 +113,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/dateSelector"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewCalendarDays"
         app:layout_constraintBottom_toTopOf="@id/fragmentContainerFooter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
