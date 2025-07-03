@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskflow.adapters.UserAdapter;
 import com.example.taskflow.database.AppDatabase;
 import com.example.taskflow.model.Task;
+import com.example.taskflow.model.TaskWithUsers;
 import com.example.taskflow.model.User;
 
 import java.util.ArrayList;
@@ -65,24 +66,20 @@ public class TaskDetailFragment extends Fragment {
 
     private void loadTaskFromDatabase() {
         new Thread(() -> {
-            Task task = db.taskDao().getTaskById(taskId);
+            TaskWithUsers taskWithUsers = db.taskUserDao().getTaskWithUsers(taskId);
 
-            if (task != null) {
+            if (taskWithUsers != null) {
+                Task task = taskWithUsers.task;
+                List<User> users = taskWithUsers.users;
+
                 requireActivity().runOnUiThread(() -> {
                     titleText.setText(task.getTitle());
                     descriptionText.setText(task.getDescription());
                     deadlineText.setText(task.getDeadline());
                     priorityText.setText(task.getPriority().getDescription());
 
-                    userList = new ArrayList<>();
-//        userList.add(new User("José"));
-//        userList.add(new User("Maria"));
-//        userList.add(new User("Lucas"));
-//        userList.add(new User("Ana"));
-
-                    userAdapter = new UserAdapter(userList);
+                    userAdapter = new UserAdapter(users);
                     recyclerView.setAdapter(userAdapter);
-
                 });
             }
         }).start();

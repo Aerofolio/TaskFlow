@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.RequiresApi;
@@ -21,6 +22,7 @@ import com.example.taskflow.adapters.UserAdapter;
 import com.example.taskflow.database.AppDatabase;
 import com.example.taskflow.model.HistoryItem;
 import com.example.taskflow.model.Task;
+import com.example.taskflow.model.TaskUserCrossRef;
 import com.example.taskflow.model.User;
 import com.example.taskflow.utils.PrefsUtils;
 
@@ -58,18 +60,32 @@ public class AddTaskMembersActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Task createdTask = getIntent().getSerializableExtra("createdTask", Task.class);
-                //TODO: Adicionar usuários selecionados, obrigar selecionar pelo menos 1
 
                 new Thread(() -> {
-                    long id = db.taskDao().addTask(createdTask);
+                    long taskId = db.taskDao().addTask(createdTask);
+                    createdTask.id = (int) taskId;
 
-                    createHistory(id);
+                    List<User> selectedUsers = addUserAdapter.getSelectedUsers();
+
+                    if (selectedUsers == null || selectedUsers.isEmpty()) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(AddTaskMembersActivity.this, "Selecione pelo menos um membro!", Toast.LENGTH_SHORT).show();
+                        });
+                        return;
+                    }
+
+                    for (User user : selectedUsers) {
+                        db.taskUserDao().insertTaskUserCrossRef(new TaskUserCrossRef(createdTask.id, user.getId()));
+                    }
+
+                    createHistory(taskId);
 
                     Intent homeIntent = new Intent(AddTaskMembersActivity.this, HomeActivity.class);
                     startActivity(homeIntent);
                 }).start();
             }
         });
+
 
         recyclerViewAddTaskMembers.setLayoutManager(new LinearLayoutManager(AddTaskMembersActivity.this));
         setUserList();

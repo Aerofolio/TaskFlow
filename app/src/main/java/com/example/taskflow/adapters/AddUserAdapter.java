@@ -11,11 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskflow.R;
 import com.example.taskflow.model.User;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddUserViewHolder> {
 
     private List<User> userList;
+    private final Set<Integer> selectedUserIds = new HashSet<>();
 
     public static class AddUserViewHolder extends RecyclerView.ViewHolder {
         public TextView userInitial, userName;
@@ -45,10 +49,28 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddUserV
         String name = user.getName();
         holder.userName.setText(name);
         holder.userInitial.setText(String.valueOf(name.charAt(0)).toUpperCase());
+        holder.addedUser.setChecked(selectedUserIds.contains(user.getId()));
+        holder.addedUser.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                selectedUserIds.add(user.getId());
+            } else {
+                selectedUserIds.remove(user.getId());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return userList.size();
+    }
+
+    public List<User> getSelectedUsers() {
+        List<User> selectedUsers = new ArrayList<>();
+        for (User user : userList) {
+            if (selectedUserIds.contains(user.getId())) {
+                selectedUsers.add(user);
+            }
+        }
+        return selectedUsers;
     }
 }
