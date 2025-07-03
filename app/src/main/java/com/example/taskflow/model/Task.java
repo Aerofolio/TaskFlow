@@ -1,11 +1,11 @@
 package com.example.taskflow.model;
 
-
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.example.taskflow.model.complexTypes.TaskPriorityEnum;
+import com.example.taskflow.model.complexTypes.TaskStatusEnum;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -25,14 +25,21 @@ public class Task implements Serializable {
     @NonNull
     private Timestamp deadline;
 
+    private Timestamp completedAt;
+
     @NonNull
     private TaskPriorityEnum priority;
 
-    public Task(@NonNull String title, @NonNull String description,@NonNull Timestamp deadline, @NonNull TaskPriorityEnum priority ) {
+    @NonNull
+    private TaskStatusEnum status;
+
+    public Task(@NonNull String title, @NonNull String description, @NonNull Timestamp deadline,
+                @NonNull TaskPriorityEnum priority, @NonNull TaskStatusEnum status) {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
         this.priority = priority;
+        this.status = status;
     }
 
     @NonNull
@@ -72,6 +79,27 @@ public class Task implements Serializable {
     }
     public void setPriority(@NonNull TaskPriorityEnum priority) {
         this.priority = priority;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Timestamp getCompletedAt() {
+        return completedAt;
+    }
+
+    public void setCompletedAt(Timestamp completedAt) {
+        this.completedAt = completedAt;
+    }
+
+    @NonNull
+    public TaskStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(@NonNull TaskStatusEnum status) {
+        this.status = status;
     }
 
     @NonNull

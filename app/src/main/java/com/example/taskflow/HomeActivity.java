@@ -1,5 +1,6 @@
 package com.example.taskflow;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,6 +28,7 @@ import com.example.taskflow.model.User;
 import com.example.taskflow.model.complexTypes.TaskPriorityEnum;
 import com.example.taskflow.utils.PrefsUtils;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +82,23 @@ public class HomeActivity extends AppCompatActivity {
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.openDrawer, R.string.closeDrawer);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_logout) {
+                SharedPreferences.Editor editor = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE).edit();
+                editor.clear();
+                editor.apply();
+
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                return true;
+            }
+            return false;
+        });
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

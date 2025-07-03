@@ -11,12 +11,14 @@ import com.example.taskflow.R;
 import com.example.taskflow.model.HistoryItem;
 import com.example.taskflow.model.HistoryItemWithUser;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
 
     private List<HistoryItemWithUser> historyList;
-
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
     public HistoryAdapter(List<HistoryItemWithUser> historyList) {
         this.historyList = historyList;
     }
@@ -33,7 +35,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
         holder.userTextView.setText(item.user.getName());
         holder.actionTextView.setText(item.historyItem.getAction());
-        holder.timestampTextView.setText(item.historyItem.getTimestamp());
+        holder.timestampTextView.setText(sdf.format(item.historyItem.getCreatedAt()));
     }
 
     @Override

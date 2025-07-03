@@ -60,4 +60,11 @@ public class HistoryFragment extends Fragment {
             });
         }).start();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadHistoryFromDatabase();
+    }
+
 }
