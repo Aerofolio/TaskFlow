@@ -5,10 +5,12 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
 import com.example.taskflow.model.Task;
 import com.example.taskflow.model.User;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Dao
@@ -27,4 +29,13 @@ public interface TaskDao {
     @Transaction
     @Query("SELECT Task.* FROM Task INNER JOIN TaskUserCrossRef ON Task.id = TaskUserCrossRef.taskId WHERE TaskUserCrossRef.userId = :userId ORDER BY Task.priority DESC, Task.deadline ASC")
     List<Task> getTasksAssignedToUser(int userId);
+
+    @Query("UPDATE Task SET status = :status WHERE id = :taskId")
+    void updateStatus(int taskId, int status);
+
+    @Query("UPDATE Task SET status = :status, completedAt = :completedAt WHERE id = :taskId")
+    void completeTask(int taskId, int status, Timestamp completedAt);
+
+    @Update
+    void updateTask(Task task);
 }

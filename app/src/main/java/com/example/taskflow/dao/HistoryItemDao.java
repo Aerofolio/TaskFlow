@@ -16,10 +16,10 @@ public interface HistoryItemDao {
     @Insert
     void insert(HistoryItem item);
 
-    @Query("SELECT * FROM HistoryItem WHERE taskId = :taskId ORDER BY timestamp ASC")
+    @Query("SELECT * FROM HistoryItem WHERE taskId = :taskId ORDER BY createdAt DESC")
     List<HistoryItem> getHistoryForTask(int taskId);
 
     @Transaction
-    @Query("SELECT * FROM HistoryItem WHERE taskId = :taskId ORDER BY timestamp ASC")
+    @Query("SELECT * FROM HistoryItem WHERE taskId = :taskId ORDER BY createdAt DESC")
     List<HistoryItemWithUser> getHistoryWithUsersForTask(int taskId);
 }

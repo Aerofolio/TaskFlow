@@ -4,6 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 @Entity
 public class HistoryItem implements Serializable {
@@ -18,13 +19,13 @@ public class HistoryItem implements Serializable {
     private String action;
 
     @NonNull
-    private String timestamp;
+    private Timestamp createdAt;
 
-    public HistoryItem(long taskId, int userId, @NonNull String action, @NonNull String timestamp) {
+    public HistoryItem(long taskId, int userId, @NonNull String action, @NonNull Timestamp createdAt) {
         this.taskId = taskId;
         this.userId = userId;
         this.action = action;
-        this.timestamp = timestamp;
+        this.createdAt = createdAt;
     }
 
     public int getId() {
@@ -59,11 +60,11 @@ public class HistoryItem implements Serializable {
     }
 
     @NonNull
-    public String getTimestamp() {
-        return timestamp;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setTimestamp(@NonNull String timestamp) {
-        this.timestamp = timestamp;
+    public void setCreatedAt(@NonNull Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 }

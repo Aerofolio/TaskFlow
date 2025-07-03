@@ -177,7 +177,7 @@
         app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/myCardPriority"
+        app:layout_constraintTop_toBottomOf="@id/myCardDate"
         app:strokeColor="@color/gray"
         app:strokeWidth="1dp">
 
@@ -206,6 +206,24 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <LinearLayout
+        android:id="@+id/buttonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:gravity="start"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/cardCompletedAt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <!-- Só para mim lembrar que os botões serão criados dinamicamente pelo código -->
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView7"
@@ -219,7 +237,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myCardDate" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonContainer" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

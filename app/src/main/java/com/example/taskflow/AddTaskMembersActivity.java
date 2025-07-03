@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskflow.adapters.AddUserAdapter;
 import com.example.taskflow.adapters.UserAdapter;
+import com.example.taskflow.business.HistoryBusiness;
 import com.example.taskflow.database.AppDatabase;
 import com.example.taskflow.model.HistoryItem;
 import com.example.taskflow.model.Task;
@@ -78,7 +79,7 @@ public class AddTaskMembersActivity extends AppCompatActivity {
                         db.taskUserDao().insertTaskUserCrossRef(new TaskUserCrossRef(createdTask.id, user.getId()));
                     }
 
-                    createHistory(taskId);
+                    new HistoryBusiness(AddTaskMembersActivity.this).registerHistory(taskId, "Tarefa criada.");
 
                     Intent homeIntent = new Intent(AddTaskMembersActivity.this, HomeActivity.class);
                     startActivity(homeIntent);
@@ -91,16 +92,6 @@ public class AddTaskMembersActivity extends AppCompatActivity {
         setUserList();
     }
 
-    private void createHistory(long taskId) {
-        String timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
-
-        SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
-        int userId = prefs.getInt(PrefsUtils.USER_ID, -1);
-
-        HistoryItem item = new HistoryItem(taskId, userId, "Tarefa criada", timestamp);
-
-        new Thread(() -> db.historyItemDao().insert(item)).start();
-    }
     private void setUserList() {
         new Thread(() -> {
             SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
