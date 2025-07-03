@@ -19,8 +19,11 @@ import com.example.taskflow.model.Task;
 import com.example.taskflow.model.complexTypes.TaskPriorityEnum;
 import com.example.taskflow.utils.FormUtils;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class RegisterTaskActivity extends AppCompatActivity {
@@ -84,10 +87,20 @@ public class RegisterTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean isFormValid = validateForm();
                 if (isFormValid) {
+                    Timestamp timestamp;
+                    try {
+                        String dateString = editTextTaskDeliveryDateInput.getText().toString();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        Date parsedDate = dateFormat.parse(dateString);
+                        timestamp = new Timestamp(parsedDate.getTime());
+                    } catch (Exception e) {
+                        timestamp = new Timestamp(System.currentTimeMillis());
+                    }
+
                     Task createdTask = new Task(
                         editTextTaskTitleInput.getText().toString(),
                         editTextTaskDescriptionInput.getText().toString(),
-                        editTextTaskDeliveryDateInput.getText().toString(),
+                        timestamp,
                         TaskPriorityEnum.values()[(int)spinnerTaskPriority.getSelectedItemId()]);
 
                     Intent addTaskMembersIntent = new Intent(RegisterTaskActivity.this, AddTaskMembersActivity.class);

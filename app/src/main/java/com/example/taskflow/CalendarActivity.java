@@ -38,9 +38,9 @@ public class CalendarActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         taskList = new ArrayList<Task>();
-        taskList.add(new Task("Tarefa 1", "Descrição da tarefa 1", "2025-05-05", TaskPriorityEnum.MEDIUM));
-        taskList.add(new Task("Tarefa 2", "Descrição da tarefa 2", "2025-06-06", TaskPriorityEnum.MEDIUM));
-        taskList.add(new Task("Tarefa 3", "Descrição da tarefa 3", "2025-07-07", TaskPriorityEnum.MEDIUM));
+//        taskList.add(new Task("Tarefa 1", "Descrição da tarefa 1", "2025-05-05", TaskPriorityEnum.MEDIUM));
+//        taskList.add(new Task("Tarefa 2", "Descrição da tarefa 2", "2025-06-06", TaskPriorityEnum.MEDIUM));
+//        taskList.add(new Task("Tarefa 3", "Descrição da tarefa 3", "2025-07-07", TaskPriorityEnum.MEDIUM));
 
         taskAdapter = new TaskAdapter(taskList);
         recyclerView.setAdapter(taskAdapter);

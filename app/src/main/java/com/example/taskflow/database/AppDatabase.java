@@ -5,7 +5,9 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
+import com.example.taskflow.converters.TimestampConverter;
 import com.example.taskflow.dao.CommentDao;
 import com.example.taskflow.dao.HistoryItemDao;
 import com.example.taskflow.dao.TaskDao;
@@ -17,7 +19,8 @@ import com.example.taskflow.model.Task;
 import com.example.taskflow.model.TaskUserCrossRef;
 import com.example.taskflow.model.User;
 
-@Database(entities = { User.class, Task.class, Comment.class, HistoryItem.class, TaskUserCrossRef.class}, version = 6)
+@Database(entities = { User.class, Task.class, Comment.class, HistoryItem.class, TaskUserCrossRef.class}, version = 7)
+@TypeConverters({TimestampConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
     public abstract UserDao userDao();

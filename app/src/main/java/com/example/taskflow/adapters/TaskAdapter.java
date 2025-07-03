@@ -14,7 +14,9 @@ import com.example.taskflow.R;
 import com.example.taskflow.TaskDetailsActivity;
 import com.example.taskflow.model.Task;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
@@ -50,7 +52,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = tasks.get(position);
         holder.textTitle.setText(task.getTitle());
         holder.textDescription.setText(task.getDescription());
-        holder.textDeadline.setText("Prazo: " + task.getDeadline());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String formattedDeadline = sdf.format(task.getDeadline());
+        holder.textDeadline.setText("Prazo: " + formattedDeadline);
 
         holder.cardView.setOnClickListener(v -> {
             Context context = v.getContext();

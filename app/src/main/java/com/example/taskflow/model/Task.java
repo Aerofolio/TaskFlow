@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey;
 import com.example.taskflow.model.complexTypes.TaskPriorityEnum;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -22,12 +23,12 @@ public class Task implements Serializable {
     private String description;
 
     @NonNull
-    private String deadline;
+    private Timestamp deadline;
 
     @NonNull
     private TaskPriorityEnum priority;
 
-    public Task(@NonNull String title, @NonNull String description,@NonNull String deadline, @NonNull TaskPriorityEnum priority ) {
+    public Task(@NonNull String title, @NonNull String description,@NonNull Timestamp deadline, @NonNull TaskPriorityEnum priority ) {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
@@ -45,7 +46,7 @@ public class Task implements Serializable {
     }
 
     @NonNull
-    public String getDeadline() {
+    public Timestamp getDeadline() {
         return deadline;
     }
 
@@ -66,7 +67,7 @@ public class Task implements Serializable {
         this.description = description;
     }
 
-    public void setDeadline(@NonNull String deadline) {
+    public void setDeadline(@NonNull Timestamp deadline) {
         this.deadline = deadline;
     }
     public void setPriority(@NonNull TaskPriorityEnum priority) {

@@ -108,11 +108,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setTaskList() {
         new Thread(() -> {
-            //TODO: Pegar somente tasks do usuário logado
-            //TODO: Ordernar por prioridade
             //TODO: Filtrar apenas tasks não concluídas
+            SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
+            int loggedUserId = prefs.getInt(PrefsUtils.USER_ID, 0);
 
-            List<Task> taskList = db.taskDao().getTasks();
+            List<Task> taskList = db.taskDao().getTasksAssignedToUser(loggedUserId);
 
             allTasks.clear();
             allTasks.addAll(taskList);

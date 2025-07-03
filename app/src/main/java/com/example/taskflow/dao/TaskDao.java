@@ -23,4 +23,8 @@ public interface TaskDao {
     @Transaction
     @Query("SELECT * FROM Task WHERE id = :taskId")
     Task getTaskById(int taskId);
+
+    @Transaction
+    @Query("SELECT Task.* FROM Task INNER JOIN TaskUserCrossRef ON Task.id = TaskUserCrossRef.taskId WHERE TaskUserCrossRef.userId = :userId ORDER BY Task.priority DESC, Task.deadline DESC")
+    List<Task> getTasksAssignedToUser(int userId);
 }

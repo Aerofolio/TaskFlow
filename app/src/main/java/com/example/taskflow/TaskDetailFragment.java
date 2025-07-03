@@ -75,7 +75,7 @@ public class TaskDetailFragment extends Fragment {
                 requireActivity().runOnUiThread(() -> {
                     titleText.setText(task.getTitle());
                     descriptionText.setText(task.getDescription());
-                    deadlineText.setText(task.getDeadline());
+                    deadlineText.setText(task.getDeadline().toString());
                     priorityText.setText(task.getPriority().getDescription());
 
                     userAdapter = new UserAdapter(users);
