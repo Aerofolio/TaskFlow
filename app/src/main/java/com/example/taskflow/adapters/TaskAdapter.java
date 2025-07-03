@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskflow.R;
 import com.example.taskflow.TaskDetailsActivity;
 import com.example.taskflow.model.Task;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
@@ -56,6 +58,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedDeadline = sdf.format(task.getDeadline());
         holder.textDeadline.setText("Prazo: " + formattedDeadline);
+
+        long deadlineMillis = task.getDeadline().getTime();
+        long nowMillis = System.currentTimeMillis();
+        if (deadlineMillis < nowMillis){
+            holder.cardView.setBackgroundColor(ContextCompat.getColor(holder.cardView.getContext(), R.color.invalid_red));
+        }
 
         holder.cardView.setOnClickListener(v -> {
             Context context = v.getContext();
