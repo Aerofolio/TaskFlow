@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.taskflow.model.Task;
 import com.example.taskflow.model.complexTypes.TaskPriorityEnum;
+import com.example.taskflow.model.complexTypes.TaskStatusEnum;
 import com.example.taskflow.utils.FormUtils;
 
 import java.sql.Timestamp;
@@ -101,7 +102,9 @@ public class RegisterTaskActivity extends AppCompatActivity {
                         editTextTaskTitleInput.getText().toString(),
                         editTextTaskDescriptionInput.getText().toString(),
                         timestamp,
-                        TaskPriorityEnum.values()[(int)spinnerTaskPriority.getSelectedItemId()]);
+                        TaskPriorityEnum.values()[(int)spinnerTaskPriority.getSelectedItemId()],
+                        TaskStatusEnum.PENDING
+                    );
 
                     Intent addTaskMembersIntent = new Intent(RegisterTaskActivity.this, AddTaskMembersActivity.class);
                     addTaskMembersIntent.putExtra("createdTask", createdTask);

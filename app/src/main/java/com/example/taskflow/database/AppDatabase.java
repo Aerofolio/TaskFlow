@@ -19,7 +19,7 @@ import com.example.taskflow.model.Task;
 import com.example.taskflow.model.TaskUserCrossRef;
 import com.example.taskflow.model.User;
 
-@Database(entities = { User.class, Task.class, Comment.class, HistoryItem.class, TaskUserCrossRef.class}, version = 7)
+@Database(entities = { User.class, Task.class, Comment.class, HistoryItem.class, TaskUserCrossRef.class}, version = 8)
 @TypeConverters({TimestampConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;

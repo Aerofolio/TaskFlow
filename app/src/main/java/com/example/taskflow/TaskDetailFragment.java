@@ -17,9 +17,12 @@ import com.example.taskflow.database.AppDatabase;
 import com.example.taskflow.model.Task;
 import com.example.taskflow.model.TaskWithUsers;
 import com.example.taskflow.model.User;
+import com.example.taskflow.model.complexTypes.TaskStatusEnum;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskDetailFragment extends Fragment {
     private int taskId;
@@ -33,7 +36,8 @@ public class TaskDetailFragment extends Fragment {
     private TextView deadlineText;
     private TextView priorityText;
     private TextView statusText;
-
+    private TextView completedAtText;
+    private View cardCompletedAt;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,8 @@ public class TaskDetailFragment extends Fragment {
         deadlineText = view.findViewById(R.id.descriptionDate);
         priorityText = view.findViewById(R.id.descriptionPriority);
         statusText = view.findViewById(R.id.descriptionStatus);
+        cardCompletedAt = view.findViewById(R.id.cardCompletedAt);
+        completedAtText = view.findViewById(R.id.descriptionCompletedAt);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -73,11 +79,23 @@ public class TaskDetailFragment extends Fragment {
                 List<User> users = taskWithUsers.users;
 
                 requireActivity().runOnUiThread(() -> {
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+
                     titleText.setText(task.getTitle());
                     descriptionText.setText(task.getDescription());
-                    deadlineText.setText(task.getDeadline().toString());
+                    deadlineText.setText(sdf.format(task.getDeadline()));
                     priorityText.setText(task.getPriority().getDescription());
+                   
+                    statusText.setText(task.getStatus().getDescription());
 
+                    if (task.getStatus() == TaskStatusEnum.COMPLETED && task.getCompletedAt() != null) {
+                        cardCompletedAt.setVisibility(View.VISIBLE);
+                        completedAtText.setText(sdf.format(task.getCompletedAt()));
+                    } else {
+                        cardCompletedAt.setVisibility(View.GONE);
+                    }
+                    
                     userAdapter = new UserAdapter(users);
                     recyclerView.setAdapter(userAdapter);
                 });
