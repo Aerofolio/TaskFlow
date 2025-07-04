@@ -76,6 +76,10 @@ public class LoginActivity extends AppCompatActivity {
 
                             Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(homeIntent);
+                        } else {
+                            runOnUiThread(() -> 
+                                Toast.makeText(LoginActivity.this, "Usuário ou senha inválidos", Toast.LENGTH_SHORT).show()
+                            );
                         }
                     }).start();
                 }
