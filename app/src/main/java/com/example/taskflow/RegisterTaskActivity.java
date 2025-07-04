@@ -19,6 +19,7 @@ import com.example.taskflow.model.Task;
 import com.example.taskflow.model.complexTypes.TaskPriorityEnum;
 import com.example.taskflow.model.complexTypes.TaskStatusEnum;
 import com.example.taskflow.utils.FormUtils;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -42,9 +43,16 @@ public class RegisterTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_task);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            int fixedPadding = (int) getResources().getDisplayMetrics().density * 24; // 24dp em pixels
+            v.setPadding(
+                    systemBars.left + fixedPadding,
+                    systemBars.top + fixedPadding,
+                    systemBars.right + fixedPadding,
+                    systemBars.bottom + fixedPadding
+            );
             return insets;
         });
+
 
         spinnerTaskPriority = findViewById(R.id.spinnerTaskPriority);
         buttonContinue = findViewById(R.id.buttonContinue);
@@ -59,8 +67,12 @@ public class RegisterTaskActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 R.layout.item_spinner,
-                spinnerOptions);
+                spinnerOptions
+        );
+        adapter.setDropDownViewResource(R.layout.item_spinner_dropdown);
         spinnerTaskPriority.setAdapter(adapter);
+        spinnerTaskPriority.setBackgroundResource(R.drawable.bg_spinner);
+
 
         editTextTaskDeliveryDateInput.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,26 +128,37 @@ public class RegisterTaskActivity extends AppCompatActivity {
 
     private boolean validateForm() {
         boolean isValid = true;
+
+        TextInputLayout layoutTaskTitle = findViewById(R.id.layoutTaskTitle);
+        TextInputLayout layoutTaskDescription = findViewById(R.id.layoutTaskDescription);
+        TextInputLayout layoutTaskDeliveryDate = findViewById(R.id.layoutTaskDeliveryDate);
+
         String taskTitle = editTextTaskTitleInput.getText().toString();
         String taskDescription = editTextTaskDescriptionInput.getText().toString();
         String taskDeliveryDate = editTextTaskDeliveryDateInput.getText().toString();
 
-        if (taskTitle.isEmpty()){
+        if (taskTitle.isEmpty()) {
+            layoutTaskTitle.setError("Campo obrigatório");
             isValid = false;
-            FormUtils.markInvalid(RegisterTaskActivity.this, editTextTaskTitleInput, findViewById(R.id.textViewTaskTitleLabel));
+        } else {
+            layoutTaskTitle.setError(null);
         }
 
-        if (taskDescription.isEmpty()){
+        if (taskDescription.isEmpty()) {
+            layoutTaskDescription.setError("Campo obrigatório");
             isValid = false;
-            FormUtils.markInvalid(RegisterTaskActivity.this, editTextTaskDescriptionInput, findViewById(R.id.textViewTaskDescriptionLabel));
+        } else {
+            layoutTaskDescription.setError(null);
         }
 
-        //TODO: Validar formato da data
-        if (taskDeliveryDate.isEmpty()){
+        if (taskDeliveryDate.isEmpty()) {
+            layoutTaskDeliveryDate.setError("Campo obrigatório");
             isValid = false;
-            FormUtils.markInvalid(RegisterTaskActivity.this, editTextTaskDeliveryDateInput, findViewById(R.id.textViewTaskDeliveryDateLabel));
+        } else {
+            layoutTaskDeliveryDate.setError(null);
         }
 
         return isValid;
     }
+
 }
