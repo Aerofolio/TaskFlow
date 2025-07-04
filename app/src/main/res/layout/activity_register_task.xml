@@ -1,110 +1,132 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="24dp"
     tools:context=".RegisterTaskActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerViewHeader"
         android:name="com.example.taskflow.HeaderFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Campo Título -->
     <TextView
         android:id="@+id/textViewTaskTitleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_task_title"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTaskTitleInput"
-        app:layout_constraintStart_toStartOf="@+id/editTextTaskTitleInput" />
-
-    <EditText
-        android:id="@+id/editTextTaskTitleInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:ems="15"
-        android:hint="@string/hint_task_title"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragmentContainerViewHeader"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="16dp" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutTaskTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textViewTaskTitleLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTaskTitleInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_task_title"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo Descrição -->
     <TextView
         android:id="@+id/textViewTaskDescriptionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_task_description"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTaskDescriptionInput"
-        app:layout_constraintStart_toStartOf="@+id/editTextTaskDescriptionInput" />
+        app:layout_constraintTop_toBottomOf="@id/layoutTaskTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
 
-    <EditText
-        android:id="@+id/editTextTaskDescriptionInput"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutTaskDescription"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:ems="15"
-        android:lines="3"
-        android:hint="@string/hint_task_description"
-        android:inputType="textMultiLine"
-        android:scrollHorizontally="false"
-        android:gravity="start"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTaskTitleInput"
-        app:layout_constraintStart_toStartOf="@+id/editTextTaskTitleInput"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTaskTitleInput" />
+        app:layout_constraintTop_toBottomOf="@id/textViewTaskDescriptionLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTaskDescriptionInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_task_description"
+            android:inputType="textMultiLine"
+            android:minLines="3" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Campo Prioridade -->
     <TextView
         android:id="@+id/textViewTaskPriorityLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_task_priority"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerTaskPriority"
-        app:layout_constraintStart_toStartOf="@+id/spinnerTaskPriority" />
+        app:layout_constraintTop_toBottomOf="@id/layoutTaskDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
 
     <Spinner
         android:id="@+id/spinnerTaskPriority"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTaskDescriptionInput"
-        app:layout_constraintStart_toStartOf="@+id/editTextTaskDescriptionInput"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTaskDescriptionInput"/>
+        app:layout_constraintTop_toBottomOf="@id/textViewTaskPriorityLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Campo Data de Entrega -->
     <TextView
         android:id="@+id/textViewTaskDeliveryDateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/label_task_delivery"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTaskDeliveryDateInput"
-        app:layout_constraintStart_toStartOf="@+id/editTextTaskDeliveryDateInput" />
-
-    <EditText
-        android:id="@+id/editTextTaskDeliveryDateInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:ems="15"
-        android:hint="@string/hint_task_delivery"
-        android:focusable="false"
-        android:inputType="date"
-        app:layout_constraintEnd_toEndOf="@+id/spinnerTaskPriority"
-        app:layout_constraintStart_toStartOf="@+id/spinnerTaskPriority"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTaskPriority" />
-    <Button
-        android:id="@+id/buttonContinue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/task_flow_blue"
-        android:ems="19"
-        android:text="@string/btn_continue"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerTaskPriority"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_marginTop="16dp" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutTaskDeliveryDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textViewTaskDeliveryDateLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextTaskDeliveryDateInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_task_delivery"
+            android:focusable="false"
+            android:inputType="date" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Botão Continuar -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonContinue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_continue"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/layoutTaskDeliveryDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/task_flow_blue"
+        android:textColor="@android:color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
