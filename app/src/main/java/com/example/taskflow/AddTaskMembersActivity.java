@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -18,20 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskflow.adapters.AddUserAdapter;
-import com.example.taskflow.adapters.UserAdapter;
 import com.example.taskflow.business.HistoryBusiness;
 import com.example.taskflow.database.AppDatabase;
-import com.example.taskflow.model.HistoryItem;
 import com.example.taskflow.model.Task;
 import com.example.taskflow.model.TaskUserCrossRef;
 import com.example.taskflow.model.User;
 import com.example.taskflow.utils.PrefsUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class AddTaskMembersActivity extends AppCompatActivity {
     Button buttonSaveTask;
@@ -39,6 +32,7 @@ public class AddTaskMembersActivity extends AppCompatActivity {
     private AddUserAdapter addUserAdapter;
     private AppDatabase db;
 
+    private Task currentTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,40 +50,56 @@ public class AddTaskMembersActivity extends AppCompatActivity {
         buttonSaveTask = findViewById(R.id.buttonSaveTask);
         recyclerViewAddTaskMembers = findViewById(R.id.recyclerViewAddTaskMembers);
 
-        buttonSaveTask.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
-            @Override
-            public void onClick(View v) {
-                Task createdTask = getIntent().getSerializableExtra("createdTask", Task.class);
+        currentTask = (Task) getIntent().getSerializableExtra("TASK");
 
-                new Thread(() -> {
-                    long taskId = db.taskDao().addTask(createdTask);
-                    createdTask.id = (int) taskId;
+        recyclerViewAddTaskMembers.setLayoutManager(new LinearLayoutManager(this));
+        setUserList();
 
-                    List<User> selectedUsers = addUserAdapter.getSelectedUsers();
+        buttonSaveTask.setOnClickListener(v -> {
+            List<User> selectedUsers = addUserAdapter.getSelectedUsers();
 
-                    if (selectedUsers == null || selectedUsers.isEmpty()) {
-                        runOnUiThread(() -> {
-                            Toast.makeText(AddTaskMembersActivity.this, "Selecione pelo menos um membro!", Toast.LENGTH_SHORT).show();
-                        });
-                        return;
-                    }
+            if (selectedUsers == null || selectedUsers.isEmpty()) {
+                Toast.makeText(AddTaskMembersActivity.this, "Selecione pelo menos um membro!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            new Thread(() -> {
+                if (currentTask == null) {
+                    runOnUiThread(() -> Toast.makeText(AddTaskMembersActivity.this, "Erro: tarefa inválida", Toast.LENGTH_SHORT).show());
+                    return;
+                }
+
+                if (currentTask.getId() > 0) {
+                    db.taskDao().updateTask(currentTask);
+
+                    db.taskUserDao().deleteByTaskId(currentTask.getId());
 
                     for (User user : selectedUsers) {
-                        db.taskUserDao().insertTaskUserCrossRef(new TaskUserCrossRef(createdTask.id, user.getId()));
+                        db.taskUserDao().insertTaskUserCrossRef(new TaskUserCrossRef(currentTask.getId(), user.getId()));
                     }
 
-                    new HistoryBusiness(AddTaskMembersActivity.this).registerHistory(taskId, "Tarefa criada.");
+                    new HistoryBusiness(this).registerHistory(currentTask.getId(), "Tarefa editada.");
 
+                } else {
+                    long taskId = db.taskDao().addTask(currentTask);
+                    currentTask.setId((int) taskId);
+
+                    for (User user : selectedUsers) {
+                        db.taskUserDao().insertTaskUserCrossRef(new TaskUserCrossRef(currentTask.getId(), user.getId()));
+                    }
+
+                    new HistoryBusiness(this).registerHistory(currentTask.getId(), "Tarefa criada.");
+                }
+
+                runOnUiThread(() -> {
+                    Toast.makeText(AddTaskMembersActivity.this, "Tarefa salva com sucesso!", Toast.LENGTH_SHORT).show();
                     Intent homeIntent = new Intent(AddTaskMembersActivity.this, HomeActivity.class);
                     startActivity(homeIntent);
-                }).start();
-            }
+                    finish();
+                });
+
+            }).start();
         });
-
-
-        recyclerViewAddTaskMembers.setLayoutManager(new LinearLayoutManager(AddTaskMembersActivity.this));
-        setUserList();
     }
 
     private void setUserList() {
@@ -98,8 +108,20 @@ public class AddTaskMembersActivity extends AppCompatActivity {
             String loggedUserCompanyCode = prefs.getString(PrefsUtils.USER_COMPANY_CODE, "");
 
             List<User> sameCompanyUsers = db.userDao().getUsersByCompanyCode(loggedUserCompanyCode);
-            addUserAdapter = new AddUserAdapter(sameCompanyUsers);
-            recyclerViewAddTaskMembers.setAdapter(addUserAdapter);
+
+            runOnUiThread(() -> {
+                addUserAdapter = new AddUserAdapter(sameCompanyUsers);
+
+                // Se estiver editando, já marca os usuários selecionados
+                if (currentTask != null && currentTask.getId() > 0) {
+                    new Thread(() -> {
+                        List<User> taskUsers = db.taskUserDao().getUsersByTaskId(currentTask.getId());
+                        runOnUiThread(() -> addUserAdapter.setSelectedUsers(taskUsers));
+                    }).start();
+                }
+
+                recyclerViewAddTaskMembers.setAdapter(addUserAdapter);
+            });
         }).start();
     }
 }

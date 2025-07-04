@@ -15,6 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.taskflow.database.AppDatabase;
 import com.example.taskflow.model.Task;
 import com.example.taskflow.model.complexTypes.TaskPriorityEnum;
 import com.example.taskflow.model.complexTypes.TaskStatusEnum;
@@ -36,6 +37,9 @@ public class RegisterTaskActivity extends AppCompatActivity {
     Button buttonContinue;
     private List<String> spinnerOptions;
 
+    private Task taskToEdit = null;
+    private AppDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +56,7 @@ public class RegisterTaskActivity extends AppCompatActivity {
             );
             return insets;
         });
-
+        db = AppDatabase.getInstance(this);
 
         spinnerTaskPriority = findViewById(R.id.spinnerTaskPriority);
         buttonContinue = findViewById(R.id.buttonContinue);
@@ -85,7 +89,6 @@ public class RegisterTaskActivity extends AppCompatActivity {
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         RegisterTaskActivity.this,
                         (view, selectedYear, selectedMonth, selectedDay) -> {
-                            // Format the date as you like
                             String date = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear);
                             editTextTaskDeliveryDateInput.setText(date);
                         },
@@ -94,6 +97,19 @@ public class RegisterTaskActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+
+        int taskId = getIntent().getIntExtra("TASK_ID", -1);
+        if (taskId != -1) {
+            new Thread(() -> {
+                Task task = db.getInstance(this).taskDao().getTaskById(taskId);
+                runOnUiThread(() -> {
+                    if (task != null) {
+                        taskToEdit = task;
+                        fillFormWithTask(task);
+                    }
+                });
+            }).start();
+        }
 
         buttonContinue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,20 +126,37 @@ public class RegisterTaskActivity extends AppCompatActivity {
                         timestamp = new Timestamp(System.currentTimeMillis());
                     }
 
-                    Task createdTask = new Task(
-                        editTextTaskTitleInput.getText().toString(),
-                        editTextTaskDescriptionInput.getText().toString(),
-                        timestamp,
-                        TaskPriorityEnum.values()[(int)spinnerTaskPriority.getSelectedItemId()],
-                        TaskStatusEnum.PENDING
-                    );
+                    Task task;
+                    if (taskToEdit != null) {
+                        taskToEdit.setTitle(editTextTaskTitleInput.getText().toString());
+                        taskToEdit.setDescription(editTextTaskDescriptionInput.getText().toString());
+                        taskToEdit.setDeadline(timestamp);
+                        taskToEdit.setPriority(TaskPriorityEnum.values()[(int)spinnerTaskPriority.getSelectedItemId()]);
+                        task = taskToEdit;
+                    } else {
+                        task = new Task(
+                                editTextTaskTitleInput.getText().toString(),
+                                editTextTaskDescriptionInput.getText().toString(),
+                                timestamp,
+                                TaskPriorityEnum.values()[(int)spinnerTaskPriority.getSelectedItemId()],
+                                TaskStatusEnum.PENDING
+                        );
+                    }
 
-                    Intent addTaskMembersIntent = new Intent(RegisterTaskActivity.this, AddTaskMembersActivity.class);
-                    addTaskMembersIntent.putExtra("createdTask", createdTask);
-                    startActivity(addTaskMembersIntent);
+                    Intent intent = new Intent(RegisterTaskActivity.this, AddTaskMembersActivity.class);
+                    intent.putExtra("TASK", task);
+                    startActivity(intent);
                 }
             }
         });
+    }
+
+    private void fillFormWithTask(Task task) {
+        editTextTaskTitleInput.setText(task.getTitle());
+        editTextTaskDescriptionInput.setText(task.getDescription());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        editTextTaskDeliveryDateInput.setText(sdf.format(task.getDeadline()));
+        spinnerTaskPriority.setSelection(task.getPriority().ordinal());
     }
 
     private boolean validateForm() {

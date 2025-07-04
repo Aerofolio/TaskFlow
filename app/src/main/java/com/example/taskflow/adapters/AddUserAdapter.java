@@ -63,7 +63,13 @@ public class AddUserAdapter extends RecyclerView.Adapter<AddUserAdapter.AddUserV
     public int getItemCount() {
         return userList.size();
     }
-
+    public void setSelectedUsers(List<User> selectedUsers) {
+        selectedUserIds.clear();
+        for (User user : selectedUsers) {
+            selectedUserIds.add(user.getId());
+        }
+        notifyDataSetChanged();
+    }
     public List<User> getSelectedUsers() {
         List<User> selectedUsers = new ArrayList<>();
         for (User user : userList) {

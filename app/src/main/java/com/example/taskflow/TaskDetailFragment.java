@@ -124,10 +124,10 @@ public class TaskDetailFragment extends Fragment {
                         btnEdit.setTextColor(Color.WHITE);
                         btnEdit.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue));
                         btnEdit.setOnClickListener(v -> {
-                        /*    Intent intent = new Intent(requireContext(), EditTaskActivity.class);
+                            Intent intent = new Intent(requireContext(), RegisterTaskActivity.class);
                             intent.putExtra("TASK_ID", task.getId());
                             startActivity(intent);
-                        */});
+                        });
                         buttonContainer.addView(btnEdit);
 
                         if (task.getStatus() == TaskStatusEnum.PENDING) {
