@@ -127,7 +127,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setTaskList() {
         new Thread(() -> {
-            //TODO: Filtrar apenas tasks não concluídas
             SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
             int loggedUserId = prefs.getInt(PrefsUtils.USER_ID, 0);
 

@@ -1,5 +1,6 @@
 package com.example.taskflow;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,9 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.taskflow.adapters.CalendarDayAdapter;
 import com.example.taskflow.adapters.TaskAdapter;
+import com.example.taskflow.database.AppDatabase;
 import com.example.taskflow.model.Task;
 import com.example.taskflow.model.complexTypes.TaskPriorityEnum;
+import com.example.taskflow.utils.PrefsUtils;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,6 +35,7 @@ public class CalendarActivity extends AppCompatActivity {
     private List<Task> taskList;
     private List<Date> calendarDaysList;
     private Date selectedDate;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +49,13 @@ public class CalendarActivity extends AppCompatActivity {
         });
 
         selectedDate = new Date();
+        db = AppDatabase.getInstance(this);
 
         recyclerTasks = findViewById(R.id.recyclerTasks);
         recyclerTasks.setLayoutManager(new LinearLayoutManager(this));
 
         taskList = new ArrayList<Task>();
-//        taskList.add(new Task("Tarefa 1", "Descrição da tarefa 1", "2025-05-05", TaskPriorityEnum.MEDIUM));
-//        taskList.add(new Task("Tarefa 2", "Descrição da tarefa 2", "2025-06-06", TaskPriorityEnum.MEDIUM));
-//        taskList.add(new Task("Tarefa 3", "Descrição da tarefa 3", "2025-07-07", TaskPriorityEnum.MEDIUM));
-
+        setTaskList();
         taskAdapter = new TaskAdapter(taskList);
         recyclerTasks.setAdapter(taskAdapter);
 
@@ -85,6 +88,33 @@ public class CalendarActivity extends AppCompatActivity {
         });
     }
 
+    private void setTaskList() {
+        new Thread(() -> {
+            SharedPreferences prefs = getSharedPreferences(PrefsUtils.APP_PREFS, MODE_PRIVATE);
+            int loggedUserId = prefs.getInt(PrefsUtils.USER_ID, 0);
+
+            List<Task> dayTasks = db.taskDao().getTasksAssignedToUserOnDate(loggedUserId, getDateWithoutTime(selectedDate));
+
+            taskList.clear();
+            taskList.addAll(dayTasks);
+
+            runOnUiThread(() -> {
+                taskAdapter = new TaskAdapter(taskList);
+                recyclerTasks.setAdapter(taskAdapter);
+            });
+        }).start();
+    }
+
+    private Timestamp getDateWithoutTime(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return new Timestamp(cal.getTime().getTime());
+    }
+
     private void setCalendarDates() {
         calendarDaysList = getCenteredDates(selectedDate);
     }
@@ -107,5 +137,6 @@ public class CalendarActivity extends AppCompatActivity {
         calendarDayAdapter = new CalendarDayAdapter(calendarDaysList, selectedDate);
         calendarDayAdapter.setOnDayClickListener(this::onDayClicked);
         recyclerViewCalendarDays.setAdapter(calendarDayAdapter);
+        setTaskList();
     }
 }
